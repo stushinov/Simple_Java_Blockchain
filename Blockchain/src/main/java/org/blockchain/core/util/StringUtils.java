@@ -1,10 +1,17 @@
 package org.blockchain.core.util;
 
+import com.google.gson.Gson;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 
 public class StringUtils {
 
+    private static final Gson gson = new Gson();
+
     private StringUtils(){}
+
+    public static String toJson(Object obj){
+        return gson.toJson(obj);
+    }
 
     public static byte[] calcSHA256(String text) {
         byte[] bytes = text.getBytes();
