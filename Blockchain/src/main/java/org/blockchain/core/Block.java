@@ -35,14 +35,8 @@ public class Block {
     }
 
     public String getBlockHash() {
-        byte[] hashedBlock = StringUtils.calcSHA256(
-                Long.toString(index) +
-                        previousBlockHash +
-                        this.transactions.toString() +
-                        Long.toString(proof)
-
-        );
-
+        String blockJson = StringUtils.toJson(this);
+        byte[] hashedBlock = StringUtils.calcSHA256(blockJson);
         return Hex.toHexString(hashedBlock);
     }
 
