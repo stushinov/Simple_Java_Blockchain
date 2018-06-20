@@ -20,7 +20,8 @@ public class Transaction {
     }
 
     private String hashTransaction() {
-        byte[] hashedTransaction = StringUtils.calcSHA256(this.sender + this.receiver + this.amount.toString());
+        String transactionJson = StringUtils.toJson(this);
+        byte[] hashedTransaction = StringUtils.calcSHA256(transactionJson);
         return Hex.toHexString(hashedTransaction);
     }
 }
