@@ -19,6 +19,19 @@ public class Blockchain {
         this.pendingTransactions.add(new Transaction(sender, receiver, amount));
     }
 
+    public void newBlock(long proof){
+        Block previousBlock = this.getLastBlock();
+        long blockIndex = previousBlock.getIndex() + 1;
+        String previousBlockHash = previousBlock.getBlockHash();
+        Block newBlock = new Block(blockIndex, previousBlockHash, new Date().getTime(), proof);
+        newBlock.setTransactions(this.pendingTransactions);
+        this.pendingTransactions.clear();
+    }
+
+    private Block getLastBlock(){
+        return this.blocks.get(this.blocks.size()-1);
+    }
+
     private void initBlocks(){
         this.blocks = new ArrayList<>();
         Block genesisBlock = new Block(0,"1", new Date().getTime(), 100L);
