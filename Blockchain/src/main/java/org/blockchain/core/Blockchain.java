@@ -10,9 +10,13 @@ public class Blockchain {
     private List<Block> blocks;
 
     public Blockchain(){
-        this.blocks = new ArrayList<>(){{
-            new Block(0,"1", new Date().getTime(), 100L);
-        }};
+        this.initBlocks();
         this.pendingTransactions = new ArrayList<>();
+    }
+
+    private void initBlocks(){
+        this.blocks = new ArrayList<>();
+        Block genesisBlock = new Block(0,"1", new Date().getTime(), 100L);
+        this.blocks.add(genesisBlock);
     }
 }
