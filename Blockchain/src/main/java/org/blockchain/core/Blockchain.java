@@ -15,6 +15,4 @@ public class Blockchain {
         }};
         this.pendingTransactions = new ArrayList<>();
     }
-
-
 }
