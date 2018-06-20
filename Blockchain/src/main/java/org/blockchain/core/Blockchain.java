@@ -1,5 +1,6 @@
 package org.blockchain.core;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,10 @@ public class Blockchain {
     public Blockchain(){
         this.initBlocks();
         this.pendingTransactions = new ArrayList<>();
+    }
+
+    public void newTransaction(String sender, String receiver, BigInteger amount){
+        this.pendingTransactions.add(new Transaction(sender, receiver, amount));
     }
 
     private void initBlocks(){
