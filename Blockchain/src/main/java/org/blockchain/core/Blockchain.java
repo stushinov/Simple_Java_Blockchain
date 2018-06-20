@@ -1,5 +1,8 @@
 package org.blockchain.core;
 
+import org.blockchain.core.util.StringUtils;
+import org.bouncycastle.util.encoders.Hex;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +17,26 @@ public class Blockchain {
         this.initBlocks();
         this.pendingTransactions = new ArrayList<>();
     }
+
+
+    public long proofOfWork(long lastProof){
+        long newProof = 0;
+
+        while(validProof(lastProof, newProof) != true){
+            newProof++;
+        }
+
+        return newProof;
+    }
+
+    private boolean validProof(long lastProof, long newProof) {
+        String guess = String.format("%s%s", lastProof, newProof);
+        byte[] hashedGuessBytes = StringUtils.calcSHA256(guess);
+        String hashedGuess = Hex.toHexString(hashedGuessBytes);
+
+        return hashedGuess.substring(0, 5).equals("0000");
+    }
+
 
     public void newTransaction(String sender, String receiver, BigInteger amount){
         this.pendingTransactions.add(new Transaction(sender, receiver, amount));
