@@ -1,5 +1,6 @@
 package org.blockchain.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Block {
@@ -14,14 +15,11 @@ public class Block {
 
     private Long proof;
 
-    public Block(long index, String previousBlockHash, Long timestamp, List<Transaction> transactions, Long proof) {
+    public Block(long index, String previousBlockHash, Long timestamp, Long proof) {
         this.index = index;
         this.previousBlockHash = previousBlockHash;
         this.timestamp = timestamp;
-        this.transactions = transactions;
+        this.transactions = new ArrayList<>();
         this.proof = proof;
-    }
-
-    public Block() {
     }
 }
