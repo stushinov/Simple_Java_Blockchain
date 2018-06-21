@@ -35,7 +35,7 @@ public class Blockchain {
         byte[] hashedGuessBytes = StringUtils.calcSHA256(guess);
         String hashedGuess = Hex.toHexString(hashedGuessBytes);
 
-        return hashedGuess.substring(0, 5).equals("0000");
+        return hashedGuess.substring(0, 4).equals("0000");
     }
 
 
