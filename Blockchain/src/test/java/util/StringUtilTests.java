@@ -3,7 +3,7 @@ package util;
 import com.google.gson.Gson;
 import org.blockchain.core.Block;
 import org.blockchain.core.Transaction;
-import org.blockchain.core.util.StringUtils;
+import org.blockchain.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

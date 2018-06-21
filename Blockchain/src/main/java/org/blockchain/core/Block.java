@@ -1,7 +1,7 @@
 package org.blockchain.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.blockchain.core.util.StringUtils;
+import org.blockchain.util.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
 
 import java.util.ArrayList;

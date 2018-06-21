@@ -1,8 +1,7 @@
 package org.blockchain.core;
 
-import org.blockchain.core.util.StringUtils;
+import org.blockchain.util.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
-
 
 import java.math.BigInteger;
 import java.util.ArrayList;

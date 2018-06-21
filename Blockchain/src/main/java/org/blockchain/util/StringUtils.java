@@ -1,4 +1,4 @@
-package org.blockchain.core.util;
+package org.blockchain.util;
 
 import com.google.gson.Gson;
 import org.bouncycastle.crypto.digests.SHA256Digest;
