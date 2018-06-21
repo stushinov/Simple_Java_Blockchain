@@ -42,17 +42,21 @@ public class Blockchain {
         this.pendingTransactions.add(new Transaction(sender, receiver, amount));
     }
 
-    public void newBlock(long proof){
+    public Block newBlock(long proof){
         Block previousBlock = this.getLastBlock();
         long blockIndex = previousBlock.getIndex() + 1;
         String previousBlockHash = previousBlock.getBlockHash();
+
         Block newBlock = new Block(blockIndex, previousBlockHash, new Date().getTime(), proof);
+
         newBlock.setTransactions(this.pendingTransactions);
         this.blocks.add(newBlock);
         this.pendingTransactions.clear();
+
+        return newBlock;
     }
 
-    private Block getLastBlock(){
+    public Block getLastBlock(){
         return this.blocks.get(this.blocks.size()-1);
     }
 

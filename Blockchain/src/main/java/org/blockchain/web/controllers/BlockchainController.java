@@ -1,6 +1,7 @@
 package org.blockchain.web.controllers;
 
 import org.blockchain.core.Blockchain;
+import org.blockchain.web.models.views.BlockSuccessfullyMinedView;
 import org.blockchain.web.models.views.BlockchainView;
 import org.blockchain.web.services.BlockchainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,11 @@ public class BlockchainController {
     public BlockchainView getBlockChain(){
         BlockchainView view = this.blockchainService.getBlockchainView();
         return view;
+    }
+
+    @GetMapping("/mine")
+    public BlockSuccessfullyMinedView mineBlock(){
+        BlockSuccessfullyMinedView successfullyMinedView = this.blockchainService.mineBlock();
+        return successfullyMinedView;
     }
 }

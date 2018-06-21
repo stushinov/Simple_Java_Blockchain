@@ -1,6 +1,9 @@
 package org.blockchain.web.services.impl;
 
+import org.blockchain.core.Block;
 import org.blockchain.core.Blockchain;
+import org.blockchain.web.models.views.BlockSuccessfullyMinedView;
+import org.blockchain.web.models.views.BlockchainBlockView;
 import org.blockchain.web.models.views.BlockchainView;
 import org.blockchain.web.services.BlockchainService;
 import org.modelmapper.ModelMapper;
@@ -23,5 +26,19 @@ public class BlockchainServiceImpl implements BlockchainService{
     public BlockchainView getBlockchainView() {
         BlockchainView blockchainView = this.modelMapper.map(this.blockchain, BlockchainView.class);
         return blockchainView;
+    }
+
+    @Override
+    public BlockSuccessfullyMinedView mineBlock() {
+        long previousProof = this.blockchain.getLastBlock().getProof();
+        long newBlockProof = this.blockchain.proofOfWork(previousProof);
+
+        Block minedBlock = this.blockchain.newBlock(newBlockProof);
+
+        BlockchainBlockView blockView = this.modelMapper.map(minedBlock, BlockchainBlockView.class);
+        final String MINING_SUCCESS_MESSAGE = String.format("Successfully mined block: %s", minedBlock.getIndex());
+        BlockSuccessfullyMinedView miningSuccess = new BlockSuccessfullyMinedView(MINING_SUCCESS_MESSAGE, blockView);
+
+        return miningSuccess;
     }
 }
