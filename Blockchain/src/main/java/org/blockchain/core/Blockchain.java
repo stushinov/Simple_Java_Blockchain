@@ -2,7 +2,7 @@ package org.blockchain.core;
 
 import org.blockchain.core.util.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
-import org.springframework.stereotype.Component;
+
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -49,6 +49,7 @@ public class Blockchain {
         String previousBlockHash = previousBlock.getBlockHash();
         Block newBlock = new Block(blockIndex, previousBlockHash, new Date().getTime(), proof);
         newBlock.setTransactions(this.pendingTransactions);
+        this.blocks.add(newBlock);
         this.pendingTransactions.clear();
     }
 
