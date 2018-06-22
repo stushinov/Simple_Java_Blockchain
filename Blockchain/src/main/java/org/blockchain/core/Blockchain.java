@@ -38,8 +38,10 @@ public class Blockchain {
     }
 
 
-    public void newTransaction(String sender, String receiver, BigInteger amount){
-        this.pendingTransactions.add(new Transaction(sender, receiver, amount));
+    public Transaction newTransaction(String sender, String receiver, BigInteger amount){
+        Transaction transaction = new Transaction(sender, receiver, amount);
+        this.pendingTransactions.add(transaction);
+        return transaction;
     }
 
     public Block newBlock(long proof){

@@ -1,13 +1,17 @@
 package org.blockchain.web.models.views;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TransactionSuccessView {
 
     private String message;
-    private String sender;
-    private String receiver;
-    private String amount;
 
-    public TransactionSuccessView() {
+    @JsonProperty(value = "transaction")
+    private BlockchainTransactionView transactionView;
+
+    public TransactionSuccessView(String message, BlockchainTransactionView transactionView) {
+        this.message = message;
+        this.transactionView = transactionView;
     }
 
     public String getMessage() {
@@ -18,27 +22,11 @@ public class TransactionSuccessView {
         this.message = message;
     }
 
-    public String getSender() {
-        return sender;
+    public BlockchainTransactionView getTransactionView() {
+        return transactionView;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setTransactionView(BlockchainTransactionView transactionView) {
+        this.transactionView = transactionView;
     }
 }

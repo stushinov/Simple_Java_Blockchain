@@ -1,7 +1,9 @@
 package org.blockchain.web.services.impl;
 
 import org.blockchain.core.Blockchain;
+import org.blockchain.core.Transaction;
 import org.blockchain.web.models.binding.TransactionBindingModel;
+import org.blockchain.web.models.views.BlockchainTransactionView;
 import org.blockchain.web.models.views.TransactionSuccessView;
 import org.blockchain.web.services.TransactionService;
 import org.modelmapper.ModelMapper;
@@ -27,10 +29,13 @@ public class TransactionServiceImpl implements TransactionService{
         final String TRANSACTION_SENDER = requestModel.getSender();
         final String TRANSACTION_RECEIVER = requestModel.getReceiver();
         final BigInteger AMOUNT = requestModel.getAmount();
-        this.blockchain.newTransaction(TRANSACTION_SENDER, TRANSACTION_RECEIVER, AMOUNT);
+        final String SUCCESS_MESSAGE = "Transaction added successfully!";
 
-        TransactionSuccessView successView = this.modelMapper.map(requestModel, TransactionSuccessView.class);
-        successView.setMessage("Transaction added successfully!");
+        Transaction transaction = this.blockchain.newTransaction(TRANSACTION_SENDER, TRANSACTION_RECEIVER, AMOUNT);
+
+        BlockchainTransactionView transactionView = this.modelMapper.map(transaction, BlockchainTransactionView.class);
+
+        TransactionSuccessView successView = new TransactionSuccessView(SUCCESS_MESSAGE, transactionView);
 
         return successView;
     }

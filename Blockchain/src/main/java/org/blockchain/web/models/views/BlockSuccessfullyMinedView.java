@@ -2,12 +2,10 @@ package org.blockchain.web.models.views;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class BlockSuccessfullyMinedView {
 
     private String message;
-    
+
     @JsonProperty(value = "block")
     private BlockchainBlockView blockchainBlockView;
 
