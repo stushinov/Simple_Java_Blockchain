@@ -13,46 +13,30 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest("server.port=8080")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class NodeTests {
 
+    private static final String MOCK_ADDRESS = "192.168.0.103:1000";
+
     @Autowired
     private Node node;
 
     public NodeTests() { }
 
+    @Test
+    public void removingAnAddedPeerShouldRemoveItFromTheSet(){
+        this.node.addPeer(MOCK_ADDRESS);
+        this.node.removePeer(MOCK_ADDRESS);
+        Assert.assertTrue("Peer not removed!",this.node.getPeers().size() == 0);
+    }
 
     @Test
-    public void addingANewNodeShouldBeAppendedToBothPeersMaps(){
-        final String PORT_MOCK = "1000";
-        final Environment MOCK_ENVIRONMENT = this.initEnvirnomentMockWithPort(PORT_MOCK);
-        final Node MOCK_NODE = new Node(MOCK_ENVIRONMENT);
-
-        this.node.addPeer(MOCK_NODE);
-
-        final String MOCK_NODE_ID = MOCK_NODE.getNodeId();
-        final String PROVIDED_NODE_ID = this.node.getNodeId();
-
-        final Map<String,Node> MOCKED_NODE_PEERS = MOCK_NODE.getPeers();
-        final Map<String,Node> PROVIDED_NODE_PEERS = this.node.getPeers();
-
-        assertPeersLengthsAreTheSame(MOCKED_NODE_PEERS, PROVIDED_NODE_PEERS);
-        assertNodeContainsNode(PROVIDED_NODE_PEERS, MOCK_NODE_ID);
-        assertNodeContainsNode(MOCKED_NODE_PEERS, PROVIDED_NODE_ID);
-    }
-
-    private void assertNodeContainsNode(Map<String, Node> nodes, String nodeBId) {
-        Assert.assertTrue("Missing node inside map!", nodes.containsKey(nodeBId));
-    }
-
-    private void assertPeersLengthsAreTheSame(Map<String, Node> nodesA, Map<String, Node> nodesB) {
-        final long NODE_A_SIZE = nodesA.size();
-        final long NODE_B_SIZE = nodesB.size();
-        Assert.assertEquals("Peers have different sizes!", NODE_A_SIZE, NODE_B_SIZE);
+    public void addingANewNodeAddressShouldBeAppendedToPeersSet(){
+        this.node.addPeer(MOCK_ADDRESS);
+        Assert.assertTrue("Peer not added!",this.node.getPeers().size() == 1);
     }
 
     @Test

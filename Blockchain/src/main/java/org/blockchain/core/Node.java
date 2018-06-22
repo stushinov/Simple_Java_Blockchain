@@ -14,31 +14,27 @@ public class Node {
     private Environment environment;
     private String nodeId;
     private String nodeAddress;
-    private Map<String, Node> peers;
+    private Set<String> peers;
 
     @Autowired
     public Node(Environment environment) {
         this.environment = environment;
         this.initId();
         this.setNodeAddress(this.environment);
-        this.peers = new HashMap<>();
+        this.peers = new HashSet<>();
     }
 
-    public void addPeer(Node node) {
-        final String nodeId = node.getNodeId();
-        if(this.nodeId.equals(nodeId)){
+    public void addPeer(String peer) {
+        if(this.nodeAddress.equals(peer)){
             System.out.println("A node cannot contain itself.");
             return;
         }
-        node.peers.putIfAbsent(this.nodeId, this);
-        this.peers.putIfAbsent(nodeId, node);
+        this.peers.add(peer);
     }
 
-    public void removePeer(Node node) {
-        String nodeId = node.getNodeId();
-
-        if (this.peers.containsKey(nodeId)) {
-            this.peers.remove(nodeId);
+    public void removePeer(String peer) {
+        if(this.peers.contains(peer)){
+            this.peers.remove(peer);
         }
     }
 
@@ -67,7 +63,7 @@ public class Node {
         return this.nodeAddress;
     }
 
-    public Map<String, Node> getPeers() {
+    public Set<String> getPeers() {
         return this.peers;
     }
 }
