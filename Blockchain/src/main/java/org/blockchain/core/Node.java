@@ -22,11 +22,16 @@ public class Node {
         this.initId();
         this.setNodeAddress(this.environment);
         this.peers = new HashMap<>();
-
     }
 
     public void addPeer(Node node) {
-        this.peers.putIfAbsent(node.getNodeId(), node);
+        final String nodeId = node.getNodeId();
+        if(this.nodeId.equals(nodeId)){
+            System.out.println("A node cannot contain itself.");
+            return;
+        }
+        node.peers.putIfAbsent(this.nodeId, this);
+        this.peers.putIfAbsent(nodeId, node);
     }
 
     public void removePeer(Node node) {
