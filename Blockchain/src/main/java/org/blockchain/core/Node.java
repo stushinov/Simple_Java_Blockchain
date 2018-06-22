@@ -6,33 +6,42 @@ import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class Node {
 
     private Environment environment;
-
+    private String nodeId;
     private String nodeAddress;
-    private Set<String> peers;
+    private Map<String, Node> peers;
 
     @Autowired
     public Node(Environment environment) {
         this.environment = environment;
+        this.initId();
         this.setNodeAddress(this.environment);
-        this.peers = new HashSet<>();
+        this.peers = new HashMap<>();
+
     }
 
-    public void addPeer(String peer){
-        this.peers.add(peer);
+    public void addPeer(Node node) {
+        this.peers.putIfAbsent(node.getNodeId(), node);
     }
 
-    public void removePeer(String peer){
-        this.peers.remove(peer);
+    public void removePeer(Node node) {
+        String nodeId = node.getNodeId();
+
+        if (this.peers.containsKey(nodeId)) {
+            this.peers.remove(nodeId);
+        }
     }
 
-    private void setNodeAddress(Environment environment)  {
+    private void initId() {
+        this.nodeId = UUID.randomUUID().toString();
+    }
+
+    private void setNodeAddress(Environment environment) {
         String serverPort = environment.getProperty("server.port");
         String host = null;
         try {
@@ -43,5 +52,17 @@ public class Node {
 
 
         this.nodeAddress = host + ":" + serverPort;
+    }
+
+    public String getNodeId() {
+        return this.nodeId;
+    }
+
+    public String getNodeAddress() {
+        return this.nodeAddress;
+    }
+
+    public Map<String, Node> getPeers() {
+        return this.peers;
     }
 }
