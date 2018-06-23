@@ -2,6 +2,7 @@ package org.blockchain.web.controllers;
 
 import org.blockchain.web.models.binding.NodeRegisterBindingModel;
 import org.blockchain.web.models.views.NodeResponseView;
+import org.blockchain.web.models.views.NodeDetailsView;
 import org.blockchain.web.services.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,8 @@ public class NodeController {
     }
 
     @GetMapping("/node")
-    public NodeResponseView getNode(){
-        NodeResponseView view = this.nodeService.getThisNode();
+    public NodeDetailsView getNode(){
+        NodeDetailsView view = this.nodeService.getThisNode();
         return view;
     }
 

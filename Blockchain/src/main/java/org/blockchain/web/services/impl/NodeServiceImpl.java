@@ -5,7 +5,9 @@ import org.blockchain.util.RequestBuilder;
 import org.blockchain.util.StringUtils;
 import org.blockchain.web.models.binding.NodeRegisterBindingModel;
 import org.blockchain.web.models.views.NodeResponseView;
+import org.blockchain.web.models.views.NodeDetailsView;
 import org.blockchain.web.services.NodeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Service;
 public class NodeServiceImpl implements NodeService {
 
     private final Node node;
+    private final ModelMapper mapper;
     private final RequestBuilder requestBuilder;
 
     @Autowired
-    public NodeServiceImpl(Node node, RequestBuilder requestBuilder) {
+    public NodeServiceImpl(Node node, ModelMapper mapper, RequestBuilder requestBuilder) {
         this.node = node;
+        this.mapper = mapper;
         this.requestBuilder = requestBuilder;
     }
 
@@ -33,12 +37,14 @@ public class NodeServiceImpl implements NodeService {
             this.node.addPeer(peerAddress);
         } catch (NullPointerException npe){ return new NodeResponseView(peerAddress, false); }
 
-        return StringUtils.fromJson(response, NodeResponseView.class);
+        NodeDetailsView detailsRetrieved = StringUtils.fromJson(response, NodeDetailsView.class);
+
+        return new NodeResponseView(detailsRetrieved.getNodeAddress(), true);
     }
 
     @Override
-    public NodeResponseView getThisNode() {
-        NodeResponseView thisNode = new NodeResponseView(this.node.getNodeAddress(), true);
+    public NodeDetailsView getThisNode() {
+        NodeDetailsView thisNode = this.mapper.map(this.node, NodeDetailsView.class);
         return thisNode;
     }
 }
