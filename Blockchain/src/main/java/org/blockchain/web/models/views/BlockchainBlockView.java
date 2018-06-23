@@ -13,7 +13,7 @@ public class BlockchainBlockView {
 
     private List<BlockchainTransactionView> transactions;
 
-    private Long proof;
+    private Long nonce;
 
     public long getIndex() {
         return index;
@@ -47,11 +47,11 @@ public class BlockchainBlockView {
         this.transactions = transactions;
     }
 
-    public Long getProof() {
-        return proof;
+    public Long getNonce() {
+        return nonce;
     }
 
-    public void setProof(Long proof) {
-        this.proof = proof;
+    public void setNonce(Long nonce) {
+        this.nonce = nonce;
     }
 }

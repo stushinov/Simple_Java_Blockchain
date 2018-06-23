@@ -30,10 +30,10 @@ public class BlockchainServiceImpl implements BlockchainService{
 
     @Override
     public BlockSuccessfullyMinedView mineBlock() {
-        long previousProof = this.blockchain.getLastBlock().getProof();
-        long newBlockProof = this.blockchain.proofOfWork(previousProof);
+        long previousNonce = this.blockchain.getLastBlock().getNonce();
+        long newNonce = this.blockchain.proofOfWork(previousNonce);
 
-        Block minedBlock = this.blockchain.newBlock(newBlockProof);
+        Block minedBlock = this.blockchain.newBlock(newNonce);
 
         BlockchainBlockView blockView = this.modelMapper.map(minedBlock, BlockchainBlockView.class);
         final String MINING_SUCCESS_MESSAGE = String.format("Successfully mined block: %s", minedBlock.getIndex());

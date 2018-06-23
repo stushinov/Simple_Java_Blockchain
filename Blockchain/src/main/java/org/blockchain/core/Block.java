@@ -17,14 +17,14 @@ public class Block {
 
     private List<Transaction> transactions;
 
-    private Long proof;
+    private Long nonce;
 
-    public Block(long index, String previousBlockHash, Long timestamp, Long proof) {
+    public Block(long index, String previousBlockHash, Long timestamp, Long nonce) {
         this.index = index;
         this.previousBlockHash = previousBlockHash;
         this.timestamp = timestamp;
         this.transactions = new ArrayList<>();
-        this.proof = proof;
+        this.nonce = nonce;
     }
 
 
@@ -67,11 +67,11 @@ public class Block {
         return transactions;
     }
 
-    public Long getProof() {
-        return proof;
+    public Long getNonce() {
+        return nonce;
     }
 
-    public void setProof(Long proof) {
-        this.proof = proof;
+    public void setNonce(Long nonce) {
+        this.nonce = nonce;
     }
 }
