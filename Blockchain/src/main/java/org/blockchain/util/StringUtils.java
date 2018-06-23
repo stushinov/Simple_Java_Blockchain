@@ -13,6 +13,8 @@ public class StringUtils {
         return gson.toJson(obj);
     }
 
+    public static <T> T fromJson(String json, Class<T> clazz){return gson.fromJson(json, clazz); }
+
     public static byte[] calcSHA256(String text) {
         byte[] bytes = text.getBytes();
         SHA256Digest digest = new SHA256Digest();
